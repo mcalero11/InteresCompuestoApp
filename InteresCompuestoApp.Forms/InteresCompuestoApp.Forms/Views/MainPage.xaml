@@ -4,13 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="InteresCompuestoApp.Forms.MainPage">
-
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-
+             BackgroundColor="#BDBDBD"
+             x:Class="InteresCompuestoApp.Forms.Views.MainPage">
+    <ContentPage.Content>
+        <StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

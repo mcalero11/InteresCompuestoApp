@@ -6,6 +6,10 @@
              mc:Ignorable="d"
              x:Class="InteresCompuestoApp.Forms.App">
     <Application.Resources>
+        <!--FONTS-->
+        <x:String x:Key="Roboto-reg">Roboto-Regular.ttf#Roboto-Regular</x:String>
+        <x:String x:Key="Roboto-bold">Roboto-Bold.ttf#Roboto-Bold</x:String>
+        <x:String x:Key="RobotoMono-reg">RobotoMono-Regular.ttf#RobotoMono-Regular</x:String>
 
     </Application.Resources>
 </Application>
