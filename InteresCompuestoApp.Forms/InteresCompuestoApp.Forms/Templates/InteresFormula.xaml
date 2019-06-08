@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="InteresCompuestoApp.Forms.Templates.InteresFormula">
+  <ContentView.Content>
+        <StackLayout Orientation="Horizontal"
+                     Spacing="0"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center">
+            <Label Text="i"
+                       Style="{StaticResource LetterLarge}"
+                       FontAttributes="Italic"/>
+            <Label Text="="
+                       Style="{StaticResource LetterLarge}"
+                       Margin="5,0"/>
+            <Grid ColumnSpacing="0"
+                  RowSpacing="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="("
+                       Style="{StaticResource LetterLarge}"
+                       FontFamily="{StaticResource Roboto-reg}"
+                       Grid.Row="0"
+                       Grid.RowSpan="3"
+                       Grid.Column="0"
+                       HorizontalTextAlignment="Center"
+                       FontSize="45"/>
+
+                <Label Text="M"
+                       Style="{StaticResource LetterLarge}"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="Center"/>
+                <BoxView Color="Black"
+                         Grid.Row="1"
+                         Grid.Column="1"
+                         HeightRequest="1"/>
+                <Label Text="C"
+                       Style="{StaticResource LetterLarge}"
+                       Grid.Row="2"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text=")"
+                       Style="{StaticResource LetterLarge}"
+                       FontFamily="{StaticResource Roboto-reg}"
+                       Grid.Row="0"
+                       Grid.RowSpan="3"
+                       Grid.Column="2"
+                       HorizontalTextAlignment="Center"
+                       FontSize="45"/>
+                
+                <Grid RowSpacing="0"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Start"
+                      Margin="-10,0,0,0"
+                     Grid.Row="0"
+                     Grid.Column="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="1"
+                           Style="{StaticResource LetterMicro}"
+                           HorizontalTextAlignment="Center"
+                           Grid.Row="0"/>
+                    <BoxView Color="Black"
+                             HeightRequest="1"
+                             HorizontalOptions="Start"
+                             WidthRequest="10"
+                             Grid.Row="1"/>
+                    <Label Text="n"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource LetterMicro}"
+                           Grid.Row="2"/>
+                </Grid>
+            </Grid>
+            <Label Text="-"
+                       Style="{StaticResource LetterLarge}"
+                       FontAttributes="Italic"/>
+            <Label Text="1"
+                       Style="{StaticResource LetterLarge}"
+                       Margin="5,0"/>
+        </StackLayout>
+      
+      
+      
+      
+      
+      
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="InteresCompuestoApp.Forms.Templates.MontoFormula">
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal"
+                     Spacing="0"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center">
+            <Label Text="M"
+                       Style="{StaticResource LetterLarge}"/>
+            <Label Text="="
+                       Style="{StaticResource LetterLarge}"
+                       Margin="5,0"/>
+            <Label Text="C"
+                       Style="{StaticResource LetterLarge}"/>
+            <Label Text="("
+                       Style="{StaticResource LetterLarge}"/>
+            <Label Text="1"
+                       Style="{StaticResource LetterLarge}"/>
+            <Label Text="+"
+                       Style="{StaticResource LetterLarge}"
+                       Margin="5,0"/>
+            <Label Text="i"
+                       Style="{StaticResource LetterLarge}"
+                       FontAttributes="Italic"/>
+            <Label Text=")"
+                       Style="{StaticResource LetterLarge}"/>
+            <Label Text="n"
+                       Style="{StaticResource LetterMicro}"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

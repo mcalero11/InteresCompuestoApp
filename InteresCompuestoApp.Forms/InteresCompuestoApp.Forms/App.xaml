@@ -40,5 +40,18 @@
             <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
             <Setter Property="Margin" Value="0,0,0,0" />
         </Style>
+        <Style TargetType="Label" x:Key="LetterLarge">
+            <Setter Property="FontFamily" Value="{StaticResource RobotoMono-reg}" />
+            <Setter Property="FontSize" Value="Large" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Label" x:Key="LetterMicro">
+            <Setter Property="FontFamily" Value="Elvetica" />
+            <Setter Property="FontSize" Value="Micro" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontAttributes" Value="Italic" />
+            <Setter Property="VerticalTextAlignment" Value="Start" />
+        </Style>
     </Application.Resources>
 </Application>
