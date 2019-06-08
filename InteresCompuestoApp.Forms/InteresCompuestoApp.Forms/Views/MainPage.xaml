@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:behaviors="clr-namespace:InteresCompuestoApp.Forms.Behaviors"
+             xmlns:converters="clr-namespace:InteresCompuestoApp.Forms.Converters"
+             xmlns:effects="clr-namespace:InteresCompuestoApp.Forms.Effects"
+             xmlns:templates="clr-namespace:InteresCompuestoApp.Forms.Templates"
+             mc:Ignorable="d"
+             BackgroundColor="#BDBDBD"
+             x:Class="InteresCompuestoApp.Forms.Views.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ScrollView" x:Key="scroll">
+                <Setter Property="Margin">
+                    <OnIdiom Default="8"
+                         Tablet="13" />
+                </Setter>
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+            <Style x:Key="backgoundContainerLogo"
+               TargetType="Frame">
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Margin">
+                    <OnIdiom Default="8"
+                         Tablet="13" />
+                </Setter>
+                <Setter Property="CornerRadius">
+                    <OnIdiom Default="17"
+                         Tablet="25" />
+                </Setter>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="LetterMedium">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="#3D3D3D"/>
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="Entry" x:Key="Decimal">
+                
+            </Style>
+            <converters:ShowFirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
+            <converters:OpacityLabelConverter x:Key="OpacityConverter" />
+            <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand">
+
+            <Frame AbsoluteLayout.LayoutBounds="0,0,1,1" 
+               AbsoluteLayout.LayoutFlags="All"
+               Style="{StaticResource backgoundContainerLogo}" />
+
+
+            <ScrollView VerticalOptions="FillAndExpand" 
+                        AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                        AbsoluteLayout.LayoutFlags="All"
+                        Style="{d:StaticResource scroll}">
+                <StackLayout BackgroundColor="Transparent" 
+                         VerticalOptions="FillAndExpand" 
+                         HorizontalOptions="CenterAndExpand"
+                         Spacing="12" 
+                         Margin="15,25,15,10">
+                    <Grid VerticalOptions="Center"
+                          HorizontalOptions="FillAndExpand">
+                        <templates:MontoFormula IsVisible="{Binding Source={x:Reference montoLabel}, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"/>
+                        <templates:CapitalFormula IsVisible="{Binding Source={x:Reference capitalLabel}, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"/>
+                        <templates:InteresFormula IsVisible="{Binding Source={x:Reference interesLabel}, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"/>
+                        <templates:PeriodosFormula IsVisible="{Binding Source={x:Reference periodosLabel}, Path=IsEnabled, Converter={StaticResource InverseBooleanConverter}}"/>
+                    </Grid>
+
+                    
+
+                    <BoxView HorizontalOptions="FillAndExpand"
+                         HeightRequest="1"
+                         Color="WhiteSmoke" 
+                         CornerRadius="5" 
+                         Margin="20,0,20,15"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Calcular"
+                           VerticalTextAlignment="Center"/>
+                        <Picker HorizontalOptions="FillAndExpand" 
+                                ItemsSource="{Binding Operations, Mode=TwoWay}"
+                                ItemDisplayBinding="{Binding OperationName}"
+                                SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        </Picker>
+                    </StackLayout>
+                    <Grid Margin="10,0"
+                      ColumnSpacing="0"
+                          RowSpacing="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <!-- Starts row 0 -->
+                        <Label x:Name="montoLabel"
+                               Text="M = "
+                               Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               IsEnabled="{Binding MontoEnabled}"
+                               Opacity="{Binding Source={x:Reference montoLabel}, Path=IsEnabled, Converter={StaticResource OpacityConverter}}"/>
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="0"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Monto.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0"
+                                   IsEnabled="{Binding Source={x:Reference montoLabel}, Path=IsEnabled}">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidateMontoCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Monto.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Monto.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"
+                                   IsVisible="{Binding Source={x:Reference montoLabel}, Path=IsEnabled}"/>
+                        </Grid>
+
+                        
+                        <!-- Ends row 0 -->
+                        <!-- Starts row 1 -->
+                        <Label x:Name="capitalLabel"
+                               Text="C = "
+                               Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
+                               Grid.Column="0"
+                               Grid.Row="1"
+                               IsEnabled="{Binding CapitalEnabled}"
+                               Opacity="{Binding Source={x:Reference capitalLabel}, Path=IsEnabled, Converter={StaticResource OpacityConverter}}"/>
+
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="1"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Capital.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0"
+                                   IsEnabled="{Binding Source={x:Reference capitalLabel}, Path=IsEnabled}">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidateCapitalCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Capital.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Capital.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"
+                                   IsVisible="{Binding Source={x:Reference capitalLabel}, Path=IsEnabled}"/>
+                        </Grid>
+                        
+
+                        <!-- Ends row 1 -->
+                        <!-- Starts row 2 -->
+
+                        <Label x:Name="interesLabel"
+                               Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
+                               Grid.Column="0"
+                               Grid.Row="2"
+                               IsEnabled="{Binding InteresEnabled}"
+                               Opacity="{Binding Source={x:Reference interesLabel}, Path=IsEnabled, Converter={StaticResource OpacityConverter}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="i (%)" FontAttributes="Italic"/>
+                                    <Span Text=" = " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="2"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Interes.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0"
+                                   IsEnabled="{Binding Source={x:Reference interesLabel}, Path=IsEnabled}">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidateInteresCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Interes.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Interes.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"
+                                   IsVisible="{Binding Source={x:Reference interesLabel}, Path=IsEnabled}"/>
+                        </Grid>
+
+                        <!-- Ends row 2 -->
+                        <!-- Starts row 3 -->
+                        <Label x:Name="periodosLabel"
+                               Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
+                               Grid.Column="0"
+                               Grid.Row="3"
+                               IsEnabled="{Binding PeriodosEnabled}"
+                               Opacity="{Binding Source={x:Reference periodosLabel}, Path=IsEnabled, Converter={StaticResource OpacityConverter}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="n " FontAttributes="Italic"/>
+                                    <Span Text=" = " />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="3"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Periodos.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0"
+                                   IsEnabled="{Binding Source={x:Reference periodosLabel}, Path=IsEnabled}">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidatePeriodosCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Periodos.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryUnsigned />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Periodos.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"
+                                   IsVisible="{Binding Source={x:Reference periodosLabel}, Path=IsEnabled}"/>
+                        </Grid>
+                        <!-- Ends row 3 -->
+                    </Grid>
+                    <Button Text="CALCULAR"
+                        BorderColor="Transparent"
+                        BackgroundColor="#1a237e"
+                        TextColor="White"
+                        Margin="0,20"
+                        FontSize="Medium"
+                        Padding="10,5"
+                        Command="{Binding CalculateCommand}"/>
+                    <Label Text="{Binding ResultProperty, StringFormat='R/= {0}'}"
+                           Style="{StaticResource LetterMedium}"
+                           IsVisible="{Binding IsVisible}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           Margin="0,15"
+                           TextColor="#1a237e"/>
+
+                </StackLayout>
+
+            </ScrollView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
