@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:behaviors="clr-namespace:InteresCompuestoApp.Forms.Behaviors"
              mc:Ignorable="d"
              x:Class="InteresCompuestoApp.Forms.App">
     <Application.Resources>
@@ -11,5 +12,33 @@
         <x:String x:Key="Roboto-bold">Roboto-Bold.ttf#Roboto-Bold</x:String>
         <x:String x:Key="RobotoMono-reg">RobotoMono-Regular.ttf#RobotoMono-Regular</x:String>
 
+        <!--COLORS-->
+        <Color x:Key="PrimaryText">#212121</Color>
+        <Color x:Key="SecondaryText">#C0C0C0</Color>
+        <Color x:Key="ErrorColor">#E15555</Color>
+        
+        <!--EXPLICITS STYLES-->
+        <Style x:Key="EntryStyle" TargetType="{x:Type Entry}">
+            <Setter Property="TextColor" Value="{StaticResource PrimaryText}" />
+            <Setter Property="PlaceholderColor" Value="{StaticResource SecondaryText}" />
+            <Setter Property="FontFamily" Value="{StaticResource Roboto-reg}" />
+            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="behaviors:LineColorBehavior.ApplyLineColor" Value="True" />
+            <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource PrimaryText}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Margin" Value="0" />
+            <Style.Triggers>
+                <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LabelErrorStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="Micro" />
+            <Setter Property="TextColor" Value="{StaticResource ErrorColor}" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+        </Style>
     </Application.Resources>
 </Application>

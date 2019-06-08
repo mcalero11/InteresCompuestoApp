@@ -4,6 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:effects="clr-namespace:InteresCompuestoApp.Forms.Effects"
+             xmlns:behaviors="clr-namespace:InteresCompuestoApp.Forms.Behaviors"
+             xmlns:converters="clr-namespace:InteresCompuestoApp.Forms.Converters"
              BackgroundColor="#BDBDBD"
              x:Class="InteresCompuestoApp.Forms.Views.MainPage">
     <ContentPage.Resources>
@@ -48,6 +51,10 @@
                 <Setter Property="VerticalTextAlignment" Value="Center" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
             </Style>
+            <Style TargetType="Entry" x:Key="Decimal">
+                
+            </Style>
+            <converters:ShowFirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -113,7 +120,8 @@
                         </Picker>
                     </StackLayout>
                     <Grid Margin="10,0"
-                      ColumnSpacing="0">
+                      ColumnSpacing="0"
+                          RowSpacing="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.2*"/>
                             <ColumnDefinition Width="*"/>
@@ -127,23 +135,86 @@
                         <!-- Starts row 0 -->
                         <Label Text="M = "
                            Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
                            Grid.Column="0"
                            Grid.Row="0"/>
-                        <Entry Grid.Column="1"
-                           Grid.Row="0"
-                           Text="{Binding MontoProperty}"/>
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="0"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Monto.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidateMontoCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Monto.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Monto.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					           Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"/>
+                        </Grid>
+
+                        
                         <!-- Ends row 0 -->
                         <!-- Starts row 1 -->
                         <Label Text="C = "
-                           Style="{StaticResource LetterMedium}"
-                           Grid.Column="0"
-                           Grid.Row="1"/>
-                        <Entry Grid.Column="1"
-                           Grid.Row="1"
-                           Text="{Binding CapitalProperty}"/>
+                               Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
+                               Grid.Column="0"
+                               Grid.Row="1"/>
+
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="1"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Capital.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidateCapitalCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Capital.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Capital.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"/>
+                        </Grid>
+                        
+
                         <!-- Ends row 1 -->
                         <!-- Starts row 2 -->
+
                         <Label Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
                            Grid.Column="0"
                            Grid.Row="2">
                             <Label.FormattedText>
@@ -153,12 +224,41 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Entry Grid.Column="1"
-                           Grid.Row="2"
-                           Text="{Binding InteresProperty}"/>
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="2"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Interes.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidateInteresCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Interes.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Interes.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"/>
+                        </Grid>
+
                         <!-- Ends row 2 -->
                         <!-- Starts row 3 -->
                         <Label Style="{StaticResource LetterMedium}"
+                               VerticalTextAlignment="Start"
                            Grid.Column="0"
                            Grid.Row="3">
                             <Label.FormattedText>
@@ -168,20 +268,54 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Entry Grid.Column="1"
-                           Grid.Row="3"
-                           Text="{Binding PeriodosProperty}"/>
+
+
+                        <Grid Grid.Column="1"
+                              Grid.Row="3"
+                              RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Entry Text="{Binding Periodos.Value, Mode=TwoWay}"
+                                   Style="{StaticResource EntryStyle}"
+                                   Grid.Row="0">
+                                <Entry.Behaviors>
+                                    <behaviors:EventToCommandBehavior EventName="TextChanged"
+							                                      Command="{Binding ValidatePeriodosCommand}" />
+                                </Entry.Behaviors>
+                                <Entry.Triggers>
+                                    <DataTrigger TargetType="Entry"
+							             Binding="{Binding Periodos.IsValid}"
+							             Value="False">
+                                        <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                    </DataTrigger>
+                                </Entry.Triggers>
+                                <Entry.Effects>
+                                    <effects:EntryDecimalEffect />
+                                </Entry.Effects>
+                            </Entry>
+                            <Label Text="{Binding Periodos.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					               Style="{StaticResource LabelErrorStyle}"
+                                   Grid.Row="1"/>
+                        </Grid>
                         <!-- Ends row 3 -->
                     </Grid>
                     <Button Text="CALCULAR"
                         BorderColor="Transparent"
-                        BackgroundColor="#201c54"
+                        BackgroundColor="#1a237e"
                         TextColor="White"
                         Margin="0,20"
                         FontSize="Medium"
                         Padding="10,5"
                         Command="{Binding CalculateCommand}"/>
-                    <Label Text="{Binding ResultProperty}"/>
+                    <Label Text="{Binding ResultProperty}"
+                           Style="{StaticResource LetterMedium}"
+                           IsVisible="{Binding IsVisible}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"/>
 
                 </StackLayout>
 
